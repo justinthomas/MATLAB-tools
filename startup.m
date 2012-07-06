@@ -1,4 +1,4 @@
-% Add this directory
+% Add the current directory
 addpath('./')
 
 % Adds other directories
