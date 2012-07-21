@@ -1,7 +1,4 @@
 % Add the current directory
-addpath('./')
-
-% Adds other directories
-addpath('./quiver3d')
+addpath(genpath(toolspath))
 
 disp('Loaded MATLAB-tools into path');
