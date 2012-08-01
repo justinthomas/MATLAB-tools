@@ -11,8 +11,8 @@ phi = asin(R(3,2,:));
 theta = acos(R(3,3,:)./cos(phi));
 psi = acos(R(2,2,:)./cos(phi));
 
-phi = permute(phi,[3 2 1]);
-theta = permute(theta, [3 2 1]);
-psi = permute(psi, [3 2 1]);
+phi = real(permute(phi,[3 2 1]));
+theta = real(permute(theta, [3 2 1]));
+psi = real(permute(psi, [3 2 1]));
 
 end
