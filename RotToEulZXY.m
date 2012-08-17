@@ -8,11 +8,15 @@ function [phi theta psi] = RotToEulZXY(R)
 % Rot = Rz*Rx*Ry;
 
 phi = asin(R(3,2,:));
-theta = acos(R(3,3,:)./cos(phi));
+theta = asin(R(3,1,:)./-cos(phi));
 psi = acos(R(2,2,:)./cos(phi));
 
 phi = permute(phi,[3 2 1]);
 theta = permute(theta, [3 2 1]);
 psi = permute(psi, [3 2 1]);
+
+phi = real(phi);
+theta = real(theta);
+psi = real(psi);
 
 end
