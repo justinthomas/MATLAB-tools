@@ -6,7 +6,7 @@ function vec = symvec(varargin)
 % varargin and determined based on datatype.
 
 
-num = 3;
+num = 1;
 letter = 'A';
 
 for idx = 1:nargin
@@ -17,7 +17,11 @@ for idx = 1:nargin
     end
 end
 
-vec = sym(letter,[num, 1]);
+if (num > 1)
+    vec = sym(letter,[num, 1]);
+else
+    vec = sym(letter);
+end
 vec = sym(vec,'real');
 
 end
