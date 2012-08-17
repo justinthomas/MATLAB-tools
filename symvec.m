@@ -1,12 +1,12 @@
 function vec = symvec(varargin)
-% function vec = symvec(letter, number)
+% function vec = symvec(varargin)
 %
 % This function creates a symbolic vector.  The
 % length and letter are simply specified in
 % varargin and determined based on datatype.
 
-% Defaults
-num = 3;
+
+num = 1;
 letter = 'A';
 
 for idx = 1:nargin
@@ -17,12 +17,11 @@ for idx = 1:nargin
     end
 end
 
-if isequal(num,1)
-    vec = sym(letter);
-else
+if (num > 1)
     vec = sym(letter,[num, 1]);
+else
+    vec = sym(letter);
 end
-
 vec = sym(vec,'real');
 
 end
