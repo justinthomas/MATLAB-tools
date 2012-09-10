@@ -14,13 +14,15 @@ function Rot = EulToRotZXY(phi, theta, psi)
 % Rz = [cos(psi) -sin(psi) 0; sin(psi) cos(psi) 0; 0 0 1];
 % Rot = Rz*Rx*Ry;
 
-Rot = zeros(3,3,length(phi));
+if length(phi) > 1
+    
+    phi = permute(phi,[3,2,1]);
+    theta = permute(theta, [3,2,1]);
+    psi = permute(psi, [3,2,1]);
+    
+end
 
-phi = permute(phi,[3,2,1]);
-theta = permute(theta, [3,2,1]);
-psi = permute(psi, [3,2,1]);
-
-Rot(:,:,:) = [...
+Rot = [...
     cos(psi).*cos(theta)-sin(phi).*sin(psi).*sin(theta),...
     -cos(phi).*sin(psi),...
     cos(psi).*sin(theta)+cos(theta).*sin(phi).*sin(psi);...
