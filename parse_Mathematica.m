@@ -1,5 +1,6 @@
 function str = parse_Mathematica(str)
 
+str = strrep(str, ' = ', '=');
 str = strrep(str, '[t]', '');
 str = strrep(str, 'Sin', 'sin');
 str = strrep(str, 'Cos', 'cos');
@@ -20,7 +21,10 @@ str = strrep(str, 'xq^(3)', 'x3');
 str = strrep(str, 'zq^(3)', 'z3');
 str = strrep(str, 'xq^(4)', 'x4');
 str = strrep(str, 'zq^(4)', 'z4');
+
+% Square root appears both ways
 str = strrep(str, '\[Sqrt]','sqrt');
+str = strrep(str, 'Sqrt', 'sqrt');
 
 % Anything else
 str = strrep(str, '\[Beta]', 'b0');
