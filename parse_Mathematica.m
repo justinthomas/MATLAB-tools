@@ -6,7 +6,8 @@ str = strrep(str, 'Sin', 'sin');
 str = strrep(str, 'Cos', 'cos');
 % str = strrep(str, '\[', '[');
 % str = strrep(str, '^[power]', 'dot');
-% regexprep
+str = regexprep(str, '\t', ',');
+
 
 str = strrep(str, '\[Beta]^\[Prime]\[Prime]', 'b2');
 str = strrep(str, '\[Beta]^\[Prime]', 'b1');
