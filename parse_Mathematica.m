@@ -5,7 +5,8 @@ str = strrep(str, 'Sin', 'sin');
 str = strrep(str, 'Cos', 'cos');
 % str = strrep(str, '\[', '[');
 % str = strrep(str, '^[power]', 'dot');
-% regexprep
+str = regexprep(str, '\t', ',');
+
 
 str = strrep(str, '\[Beta]^\[Prime]\[Prime]', 'b2');
 str = strrep(str, '\[Beta]^\[Prime]', 'b1');
@@ -21,6 +22,7 @@ str = strrep(str, 'zq^(3)', 'z3');
 str = strrep(str, 'xq^(4)', 'x4');
 str = strrep(str, 'zq^(4)', 'z4');
 str = strrep(str, '\[Sqrt]','sqrt');
+str = strrep(str, 'Sqrt', 'sqrt');
 
 % Anything else
 str = strrep(str, '\[Beta]', 'b0');
