@@ -8,6 +8,8 @@ str = strrep(str, 'Cos', 'cos');
 % str = strrep(str, '^[power]', 'dot');
 str = regexprep(str, '\t', ',');
 
+% Replace strings that look like Derivative[1][zq] with zq^(1)
+str = regexprep(str, 'Derivative\[(\d+)\]\[([a-zA-Z_0-9θ]+)\]', '$2$1');
 
 str = strrep(str, '\[Beta]^\[Prime]\[Prime]', 'b2');
 str = strrep(str, '\[Beta]^\[Prime]', 'b1');
@@ -23,6 +25,9 @@ str = strrep(str, 'xq^(3)', 'x3');
 str = strrep(str, 'zq^(3)', 'z3');
 str = strrep(str, 'xq^(4)', 'x4');
 str = strrep(str, 'zq^(4)', 'z4');
+
+% Fix stuff Special characters
+str = strrep(str, 'th01', 'th1');
 
 % Square root appears both ways
 str = strrep(str, '\[Sqrt]','sqrt');
