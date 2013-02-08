@@ -12,13 +12,27 @@ function LaTeXCode = LaTeXPlot(export_name, figure_handle)
 % through the MATLAB exchange.  Don't forget to have
 % 
 % \usepackage{pgfplots}
+% \newlength\figureheight
+% \newlength\figurewidth
+% % A setting that would be applied to all pgfplots
+% \pgfplotsset{every axis/.append style={
+%		max space between ticks=40pt,
+%        scaled y ticks = false, 
+%        scaled x ticks = false, 
+%        y tick label style={/pgf/number format/fixed},
+%        x tick label style={/pgf/number format/fixed}
+%    }
+%}
 %
 % in the header of your LaTeX file.
+%
+% This wrapper written by:
+% Justin Thomas
+% justinthomas@jtwebs.net
+% 2013 February 08
 
 if ~exist('matlab2tikz.m', 'file')
-    
     error('matlab2tikz.m cannot be found.  Make sure you have downloaded it from the MATLAB exchange and have it added to your path.')
-    
 else
     
     if nargin > 1 && ~isempty(figure_handle)
@@ -27,26 +41,32 @@ else
         h = gcf;
     end
     
+    % So that MATLAB doesn't throw a warning, we need the interperter of the legends set to none 
+    legend_handles = findobj(h,'Type','axes','Tag','legend');
+    for idx = 1:length(legend_handles)
+        set(legend_handles(idx), 'Interpreter', 'none');
+    end
+    
+    % Now, convert to tikz
     matlab2tikz(...
         'filename',[export_name, '.tikz'],...
         'figurehandle',h,...
         'height','\figureheight',...
         'width','\figurewidth',...
         'showInfo',false,...
-        'interpretTickLabelsAsTex',true,...
         'parseStrings',false);
     
+    % The LaTeX code for your LaTeX document
     tex_code = [...
-        '\n\\begin{figure}', ...
+        '\n\\begin{figure}[!htb]', ...
         '\n\t\\centering',...
-        '\n\t\\newlength\\figureheight', ...
-        '\n\t\\newlength\\figurewidth', ...
         '\n\t\\setlength\\figureheight{\\textwidth}', ...
         '\n\t\\setlength\\figurewidth{\\textwidth}', ...
         '\n\t\\input{', export_name, '.tikz}', ...
-        '\n\t\\caption{\\label{fig:}}',...
+        '\n\t\\caption{\\label{fig:', export_name, '}}',...
         '\n\\end{figure}\n'];
     
+    % How are we giving you the code
     if nargout > 0
         
         LaTeXCode = sprintf(tex_code);
@@ -56,7 +76,7 @@ else
         
         fprintf(['\n\nThe LaTeX code:\n',...
         tex_code,...
-        '\nhas been copied to your clipboard.  Don''t forget to have:\n\n\\usepackage{pgfplots}\n\nin your header.\n\n']);
+        '\nhas been copied to your clipboard.\n']);
     end
     
 end
