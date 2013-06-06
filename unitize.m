@@ -3,6 +3,10 @@ function units = unitize(matrix, dim)
 % specified dimension.  Dim = 1 means vectors are the columns and Dim = 2
 % means the vectors are the rows.  A vector of m by n is returned as units.
 
+if nargin < 2
+    dim = 1;
+end
+
 norms = sqrt(sum(matrix.^2,dim));
 
 switch dim

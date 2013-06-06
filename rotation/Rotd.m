@@ -1,4 +1,4 @@
-function R = Rot_deg(theta, ax)
+function R = Rotd(theta, ax)
 % Creates a rotation matrix that is rotated an angle of theta about the
 % specified axis.  Note: use 'x', 'y', 'z' for the ax argument.
 
