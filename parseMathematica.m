@@ -1,4 +1,31 @@
-function str = parse_Mathematica(str)
+function str = parseMathematica(str)
+
+if isequal(exist(str, 'file'), 2)
+    
+    % Open the file
+    fid = fopen(str);
+    
+    % Parse each line
+    str = [];
+    while ~feof(fid)
+        str = [str, parse(fgetl(fid)), ';\n']; %#ok<AGROW>
+    end
+    
+    % Close the file
+    fclose(fid);
+    
+    % Evaluate newlines and such
+    str = sprintf(str);
+    
+else
+    str = parse(str);
+end
+
+clipboard('copy', str)
+
+end
+
+function str = parse(str)
 
 str = strrep(str, ' = ', '=');
 str = strrep(str, '[t]', '');

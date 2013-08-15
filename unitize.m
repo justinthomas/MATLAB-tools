@@ -1,6 +1,8 @@
 function units = unitize(matrix, dim)
+% units = unitize(matrix, dim)
+%
 % This takes an m by n matrix and unitizes the columns or rows based on the
-% specified dimension.  Dim = 1 means vectors are the columns and Dim = 2
+% specified dimension.  dim = 1 means vectors are the columns and dim = 2
 % means the vectors are the rows.  A vector of m by n is returned as units.
 
 if nargin < 2
