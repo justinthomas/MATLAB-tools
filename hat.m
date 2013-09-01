@@ -13,8 +13,8 @@ switch length(vec)
         
     case 1
         ss = [...
-            0, -vec; ...
-            vec, 0];
+            0, vec; ...
+            -vec, 0];
 end
 
 end
