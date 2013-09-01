@@ -6,13 +6,13 @@ function R = Quat2Rot( q )
 % Quat2Rot returns a rotation matrix using the conversion from
 % http://en.wikipedia.org/wiki/Quaternions_and_spatial_rotation#Conversion_to_and_from_the_matrix_representation
 
-% Normalize the quaternion
-q = unitize(q);
+% Normalize the quaternion(s)
+q = unitize(q, 1);
 
-a = q(1);
-b = q(2);
-c = q(3);
-d = q(4);
+a = permute(q(1, :), [3, 1, 2]);
+b = permute(q(2, :), [3, 1, 2]);
+c = permute(q(3, :), [3, 1, 2]);
+d = permute(q(4, :), [3, 1, 2]);
 
 % And determine the rotation matrix
 R = [...
