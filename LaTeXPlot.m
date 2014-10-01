@@ -29,56 +29,74 @@ function LaTeXCode = LaTeXPlot(export_name, figure_handle)
 % This wrapper written by:
 % Justin Thomas
 % justinthomas@jtwebs.net
-% 2013 February 08
+%
+% Last edited:
+% 2014 September 30
 
 if ~exist('matlab2tikz.m', 'file')
-    error('matlab2tikz.m cannot be found.  Make sure you have downloaded it from the MATLAB exchange and have it added to your path.')
+    
+    warning('matlab2tikz.m cannot be found');
+    str = input('Automatic setup? (y/n): ', 's');
+    
+    switch str
+        case {'y', 'Y'}
+            disp('Downloading the most recent version and adding it to your path...')
+            this_path = fileparts(which(mfilename));
+            zipname = 'matlab2tikz.zip';
+            zip_path = [this_path, filesep, zipname];
+            urlwrite('https://github.com/nschloe/matlab2tikz/archive/master.zip', zip_path);
+            unzip(zip_path, [this_path, filesep, 'matlab2tikz']);
+            delete(zip_path);
+            addpath(genpath([this_path, filesep, 'matlab2tikz']));
+        otherwise
+            disp('Please add matlab2tikz to your path and try again.');
+            return
+    end
+end
+
+
+if nargin > 1 && ~isempty(figure_handle)
+    h = figure_handle;
 else
+    h = gcf;
+end
+
+% So that MATLAB doesn't throw a warning, we need the interperter of the legends set to none
+legend_handles = findobj(h,'Type','axes','Tag','legend');
+for idx = 1:length(legend_handles)
+    set(legend_handles(idx), 'Interpreter', 'none');
+end
+
+% Now, convert to tikz
+matlab2tikz(...
+    'filename',[export_name, '.tikz'],...
+    'figurehandle',h,...
+    'height','\figureheight',...
+    'width','\figurewidth',...
+    'showInfo',false,...
+    'parseStrings',false);
+
+% The LaTeX code for your LaTeX document
+tex_code = [...
+    '\n\\begin{figure}[!htb]', ...
+    '\n\t\\centering',...
+    '\n\t\\setlength\\figureheight{\\textwidth}', ...
+    '\n\t\\setlength\\figurewidth{\\textwidth}', ...
+    '\n\t\\input{', export_name, '.tikz}', ...
+    '\n\t\\caption{\\label{fig:', export_name, '}}',...
+    '\n\\end{figure}\n'];
+
+% How are we giving you the code
+if nargout > 0
     
-    if nargin > 1 && ~isempty(figure_handle)
-        h = figure_handle;
-    else
-        h = gcf;
-    end
+    LaTeXCode = sprintf(tex_code);
     
-    % So that MATLAB doesn't throw a warning, we need the interperter of the legends set to none 
-    legend_handles = findobj(h,'Type','axes','Tag','legend');
-    for idx = 1:length(legend_handles)
-        set(legend_handles(idx), 'Interpreter', 'none');
-    end
+else
+    clipboard('copy', sprintf(tex_code));
     
-    % Now, convert to tikz
-    matlab2tikz(...
-        'filename',[export_name, '.tikz'],...
-        'figurehandle',h,...
-        'height','\figureheight',...
-        'width','\figurewidth',...
-        'showInfo',false,...
-        'parseStrings',false);
-    
-    % The LaTeX code for your LaTeX document
-    tex_code = [...
-        '\n\\begin{figure}[!htb]', ...
-        '\n\t\\centering',...
-        '\n\t\\setlength\\figureheight{\\textwidth}', ...
-        '\n\t\\setlength\\figurewidth{\\textwidth}', ...
-        '\n\t\\input{', export_name, '.tikz}', ...
-        '\n\t\\caption{\\label{fig:', export_name, '}}',...
-        '\n\\end{figure}\n'];
-    
-    % How are we giving you the code
-    if nargout > 0
-        
-        LaTeXCode = sprintf(tex_code);
-        
-    else
-        clipboard('copy', sprintf(tex_code));
-        
-        fprintf(['\n\nThe LaTeX code:\n',...
+    fprintf(['\n\nThe LaTeX code:\n',...
         tex_code,...
         '\nhas been copied to your clipboard.\n']);
-    end
-    
 end
 
 end
