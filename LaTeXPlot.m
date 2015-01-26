@@ -16,13 +16,14 @@ function LaTeXCode = LaTeXPlot(export_name, figure_handle)
 % \newlength\figurewidth
 % % A setting that would be applied to all pgfplots
 % \pgfplotsset{every axis/.append style={
-%		max space between ticks=40pt,
-%        scaled y ticks = false, 
-%        scaled x ticks = false, 
-%        y tick label style={/pgf/number format/fixed},
-%        x tick label style={/pgf/number format/fixed}
-%    }
-%}
+%   max space between ticks=40pt,
+%   scaled y ticks = false, 
+%   scaled x ticks = false, 
+%   y tick label style={/pgf/number format/fixed},
+%   x tick label style={/pgf/number format/fixed},
+%   compat=1.10
+%   }
+% }
 %
 % in the header of your LaTeX file.
 %
@@ -31,7 +32,7 @@ function LaTeXCode = LaTeXPlot(export_name, figure_handle)
 % justinthomas@jtwebs.net
 %
 % Last edited:
-% 2014 September 30
+% 2015 January 26
 
 if ~exist('matlab2tikz.m', 'file')
     
@@ -79,11 +80,12 @@ matlab2tikz(...
 % The LaTeX code for your LaTeX document
 tex_code = [...
     '\n\\begin{figure}[!htb]', ...
-    '\n\t\\centering',...
-    '\n\t\\setlength\\figureheight{0.5\\columnwidth}', ...
-    '\n\t\\setlength\\figurewidth{0.8\\columnwidth}', ...
-    '\n\t\\input{', export_name, '.tikz}', ...
-    '\n\t\\caption{\\label{fig:', export_name, '}}',...
+    '\n  \\centering',...
+    '\n  \\setlength\\figureheight{0.5\\columnwidth}', ...
+    '\n  \\setlength\\figurewidth{0.8\\columnwidth}', ...
+    '\n  \\input{', export_name, '.tikz}', ...
+    '\n  \\caption{}',...
+    '\n  \\label{fig:', export_name, '}',...
     '\n\\end{figure}\n'];
 
 % How are we giving you the code
