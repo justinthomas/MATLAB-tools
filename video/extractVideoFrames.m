@@ -1,5 +1,5 @@
 function mov = extractVideoFrames(t, filename, destination)
-% [] = extractVideoFrames(t_start, delta_t, n, filename, destination)
+% [] = extractVideoFrames(t_vec, filename, destination)
 
 obj = VideoReader(filename);
 

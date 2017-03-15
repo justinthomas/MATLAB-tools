@@ -1,6 +1,6 @@
-function [] = stitchImages(h, w, c, prefix, nums, suffix)
+function img = stitchImages(h, w, c, prefix, nums, ext)
 % 
-% [] = stitchImages(h, w, c, prefix, nums, suffix)
+% img = stitchImages(h, w, c, prefix, nums, ext)
 % 
 % h is an integer that is the final image patch in pixels  (they must all be the same)
 % w is the desired final patch width (these can vary)
@@ -21,7 +21,7 @@ if nargin < 5
     end
 else    
     for idx = 1:length(nums)
-        im(idx).cdata = imread([prefix, num2str(nums(idx)), suffix]);
+        im(idx).cdata = imread([prefix, num2str(nums(idx)), '.', ext]);
         dims = [dims, size(im(idx).cdata)'];
     end
 end
@@ -49,7 +49,7 @@ end
 imshow(img);
 
 if nargin > 4
-    imwrite(img, [prefix, '_sequence.png'], 'png')
+    imwrite(img, [prefix, '_sequence.', ext], ext)
 end
 
 end

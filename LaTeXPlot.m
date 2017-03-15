@@ -33,6 +33,9 @@ function LaTeXCode = LaTeXPlot(export_name, figure_handle)
 %
 % Last edited:
 % 2015 January 26
+%
+% TODO: Check for dangerous characters that might appear as text in the
+% figure. For example, a % sign would be an issue. Also, probably a \
 
 if ~exist('matlab2tikz.m', 'file')
     

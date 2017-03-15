@@ -22,6 +22,7 @@ if (num > 1)
 else
     vec = sym(letter);
 end
-vec = sym(vec,'real');
+
+assume(vec, 'real');
 
 end

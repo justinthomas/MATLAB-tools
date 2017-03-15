@@ -3,6 +3,8 @@ function i = findMatchingParen(s, n)
 %
 % findMatchingParen returns the index, i, of the parenthesis that matches 
 % the parenthesis at s(n)
+%
+% written by Justin Thomas
 
 % Switch between searching forwards or backwards
 switch s(n)
